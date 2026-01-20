@@ -1,9 +1,10 @@
 const express = require("express");
 const path = require("path");
+const connectdb = require("./config/db");
 
 const app = express();
 const PORT = 4000;
-
+connectdb();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
