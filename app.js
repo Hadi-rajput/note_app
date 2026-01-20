@@ -1,6 +1,10 @@
 const express = require("express");
 const path = require("path");
 const connectdb = require("./config/db");
+const { body, validationResult } = require("express-validator");
+const bcrypt = require("bcrypt");
+const User = require("./model/user");
+const { error } = require("console");
 
 const app = express();
 const PORT = 4000;
@@ -40,7 +44,7 @@ app.get("/login", (req, res) => {
 
 // Create Account Page
 app.get("/create-account", (req, res) => {
-  res.render("create-account");
+  res.render("create-account", { errors: [], formData: {} });
 });
 
 // Logout Route (dummy - no logic, just redirects to home)
@@ -48,25 +52,79 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
+app.post(
+  "/create-account",
+  [
+    body("name")
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("Name must be at least 3 characters long"),
+    body("email")
+      .trim()
+      .isEmail()
+      .withMessage("Please enter a valid email")
+      .normalizeEmail(),
+    body("password")
+      .isLength({ min: 6 })
+      .withMessage("Password must be at least 6 characters long"),
+    body("confirm").custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error("Password confirmation does not match password");
+      }
+      return true;
+    }),
+  ],
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    const { name, email, password } = req.body;
+
+    if (!errors.isEmpty()) {
+      return res.render("create-account", {
+        errors: errors.array(),
+        formData: { name, email },
+      });
+    }
+
+    try {
+      // Check if user already exists
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.render("create-account", {
+          errors: [{ msg: "User already exists with this email" }],
+          formData: { name, email },
+        });
+      }
+
+      // Hash password
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Save user
+      const newUser = new User({
+        fullname: name,
+        email,
+        password: hashedPassword,
+      });
+
+      await newUser.save();
+
+      // Redirect to login page after successful registration
+      res.redirect("/login");
+    } catch (error) {
+      console.log("user save failed " + error);
+      next(error); // Pass to error handler
+    }
+  },
+);
+
 // 404 Handler
 app.use((req, res) => {
-  res.status(404).send(`
-        <html>
-            <head>
-                <title>404 - Not Found</title>
-                <style>
-                    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-                    h1 { color: #ef4444; }
-                    a { color: #6366f1; text-decoration: none; }
-                </style>
-            </head>
-            <body>
-                <h1>404 - Page Not Found</h1>
-                <p>The page you're looking for doesn't exist.</p>
-                <a href="/">← Go Back Home</a>
-            </body>
-        </html>
-    `);
+  res.status(404).render("404");
+});
+
+// 500 Handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render("500");
 });
 
 // Start Server
