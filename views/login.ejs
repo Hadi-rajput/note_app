@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login to your NoteApp account">
+    <title>Note App - Login</title>
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/js/theme.js"></script>
+</head>
+
+<body>
+    <!-- Theme Toggle (Hidden Checkbox) -->
+    <input type="checkbox" id="theme-toggle" class="theme-toggle-checkbox" checked>
+
+    <div class="floating-theme-toggle">
+        <label for="theme-toggle" class="theme-toggle-btn">
+            <span class="theme-icon">☀️</span>
+        </label>
+    </div>
+
+    <!-- Login Page Content -->
+    <main class="main-content form-page">
+        <div class="form-container auth-container">
+            <div class="form-header">
+                <a href="/" class="logo" style="justify-content: center; margin-bottom: var(--spacing-lg);">
+                    <span class="logo-icon">
+                        <svg class="logo-svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15.5 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3z"></path>
+                            <path d="M15 3v6h6"></path>
+                            <line x1="9" y1="13" x2="15" y2="13"></line>
+                            <line x1="9" y1="17" x2="15" y2="17"></line>
+                        </svg>
+                    </span>
+                    <span class="logo-text">NoteApp</span>
+                </a>
+                <h1 class="form-title">Login</h1>
+                <p class="form-subtitle">Enter your credentials to access your notes</p>
+            </div>
+
+            <form class="note-form auth-form" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="login-email" class="form-label">Email Address</label>
+                    <input type="email" id="login-email" name="email" class="form-input" placeholder="example@mail.com"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password" class="form-label">Password</label>
+                    <input type="password" id="login-password" name="password" class="form-input" placeholder="••••••••"
+                        required>
+                </div>
+
+                <div class="form-actions auth-actions">
+                    <button type="submit" class="btn-primary w-full">Login</button>
+                </div>
+
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="/create-account">Create one here</a></p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 NoteApp. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

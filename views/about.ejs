@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn more about NoteApp - Your personal note-taking companion">
+    <title>Note App - About</title>
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/js/theme.js"></script>
+</head>
+
+<body>
+    <!-- Theme Toggle (Hidden Checkbox) -->
+    <input type="checkbox" id="theme-toggle" class="theme-toggle-checkbox" checked>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="/" class="logo">
+                    <span class="logo-icon">
+                        <svg class="logo-svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15.5 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3z"></path>
+                            <path d="M15 3v6h6"></path>
+                            <line x1="9" y1="13" x2="15" y2="13"></line>
+                            <line x1="9" y1="17" x2="15" y2="17"></line>
+                        </svg>
+                    </span>
+                    <span class="logo-text">NoteApp</span>
+                </a>
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search notes..." class="search-input">
+                </div>
+            </div>
+
+            <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox">
+            <label for="menu-toggle" class="hamburger-btn">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </label>
+
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/add-note" class="nav-link">Add Note</a></li>
+                <li><a href="/about" class="nav-link active">About</a></li>
+                <li><a href="/logout" class="nav-link logout">Logout</a></li>
+            </ul>
+
+            <label for="theme-toggle" class="theme-toggle-btn">
+                <span class="theme-icon">☀️</span>
+            </label>
+        </div>
+    </nav>
+
+    <!-- About Content -->
+    <main class="main-content about-page">
+        <div class="about-container">
+            <div class="about-header">
+                <h1 class="about-title">About NoteApp</h1>
+                <p class="about-tagline">Your Digital Companion for Organized Thinking</p>
+            </div>
+
+            <div class="about-content">
+                <section class="about-section">
+                    <h2 class="section-heading">What is NoteApp?</h2>
+                    <p class="section-text">
+                        NoteApp is a modern, intuitive note-taking application designed to help you capture,
+                        organize, and manage your thoughts, ideas, and tasks efficiently. Whether you're a
+                        student, professional, or creative thinker, NoteApp provides a clean and distraction-free
+                        environment to keep your notes organized and accessible.
+                    </p>
+                </section>
+
+                <section class="about-section">
+                    <h2 class="section-heading">Our Mission</h2>
+                    <p class="section-text">
+                        We believe that great ideas deserve a great platform. Our mission is to provide a
+                        seamless note-taking experience that adapts to your workflow, not the other way around.
+                        With NoteApp, you can focus on what matters most—your ideas—while we handle the rest.
+                    </p>
+                </section>
+
+                <section class="about-section">
+                    <h2 class="section-heading">Key Features</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🎨</div>
+                            <h3 class="feature-title">Beautiful Design</h3>
+                            <p class="feature-description">
+                                Clean, modern interface with dark and light modes to suit your preference and reduce eye
+                                strain.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📱</div>
+                            <h3 class="feature-title">Fully Responsive</h3>
+                            <p class="feature-description">
+                                Access your notes seamlessly across all devices—desktop, tablet, or mobile.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⚡</div>
+                            <h3 class="feature-title">Fast & Efficient</h3>
+                            <p class="feature-description">
+                                Lightning-fast performance ensures your notes are always ready when you need them.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔍</div>
+                            <h3 class="feature-title">Easy Search</h3>
+                            <p class="feature-description">
+                                Quickly find any note with our powerful search functionality.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="about-section">
+                    <h2 class="section-heading">Why Choose NoteApp?</h2>
+                    <p class="section-text">
+                        In a world filled with distractions, NoteApp stands out by offering simplicity without
+                        sacrificing functionality. We've carefully crafted every detail to ensure your note-taking
+                        experience is smooth, enjoyable, and productive. From the elegant user interface to the
+                        thoughtful organization features, every aspect of NoteApp is designed with you in mind.
+                    </p>
+                </section>
+
+                <section class="about-section cta-section">
+                    <h2 class="section-heading">Ready to Get Started?</h2>
+                    <p class="section-text">
+                        Join thousands of users who have already transformed the way they capture and organize
+                        their thoughts. Start your journey with NoteApp today!
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="/add-note" class="btn-primary">Create Your First Note</a>
+                        <a href="/" class="btn-secondary">View Your Notes</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 NoteApp. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
