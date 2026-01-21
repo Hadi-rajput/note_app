@@ -78,244 +78,42 @@
 
             <div class="notes-grid">
                 <!-- Note Card 1 -->
-                <div class="note-card">
-                    <div class="note-content">
-                        <h3 class="note-title">Meeting Notes</h3>
-                        <p class="note-description">Important points discussed in today's team meeting about the
-                            upcoming project deliverables and timeline.</p>
-                        <div class="note-meta">
-                            <span class="note-date">Jan 15, 2026</span>
-                        </div>
-                    </div>
-                    <div class="note-actions">
-                        <button class="action-btn edit-btn" title="Edit Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
-                        </button>
-                        <button class="action-btn delete-btn" title="Delete Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
+              <% if (notes.length === 0) { %>
+    <p>No notes found</p>
+<% } else { %>
+    <% notes.forEach(note => { %>
+        <div class="note-card">
+            <div class="note-content">
+                <h3 class="note-title"><%= note.title %></h3>
+                <p class="note-description"><%= note.description %></p>
+                <div class="note-meta">
+                    <span class="note-date"><%= note.createdAt.toDateString() %></span>
                 </div>
+            </div>
+            <div class="note-actions">
+             <!-- Edit Note Link -->
+<a href="/edit-note/<%= note._id %>" class="action-btn edit-btn" title="Edit Note">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+    </svg>
+</a>
 
-                <!-- Note Card 2 -->
-                <div class="note-card">
-                    <div class="note-content">
-                        <h3 class="note-title">Shopping List</h3>
-                        <p class="note-description">Groceries needed for the week: milk, eggs, bread, vegetables,
-                            fruits, and other essentials.</p>
-                        <div class="note-meta">
-                            <span class="note-date">Jan 14, 2026</span>
-                        </div>
-                    </div>
-                    <div class="note-actions">
-                        <button class="action-btn edit-btn" title="Edit Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
-                        </button>
-                        <button class="action-btn delete-btn" title="Delete Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+<!-- Delete Note Link -->
+<a href="/delete-note/<%= note._id %>" class="action-btn delete-btn" title="Delete Note" onclick="return confirm('Are you sure you want to delete this note?');">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+    </svg>
+</a>
 
-                <!-- Note Card 3 -->
-                <div class="note-card">
-                    <div class="note-content">
-                        <h3 class="note-title">Project Ideas</h3>
-                        <p class="note-description">Brainstorming session results for new features and improvements to
-                            enhance user experience.</p>
-                        <div class="note-meta">
-                            <span class="note-date">Jan 13, 2026</span>
-                        </div>
-                    </div>
-                    <div class="note-actions">
-                        <button class="action-btn edit-btn" title="Edit Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
-                        </button>
-                        <button class="action-btn delete-btn" title="Delete Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+            </div>
+        </div>
+    <% }) %>
+<% } %>
 
-                <!-- Note Card 4 -->
-                <div class="note-card">
-                    <div class="note-content">
-                        <h3 class="note-title">Book Recommendations</h3>
-                        <p class="note-description">Must-read books for personal development and professional growth in
-                            the coming months.</p>
-                        <div class="note-meta">
-                            <span class="note-date">Jan 12, 2026</span>
-                        </div>
-                    </div>
-                    <div class="note-actions">
-                        <button class="action-btn edit-btn" title="Edit Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
-                        </button>
-                        <button class="action-btn delete-btn" title="Delete Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
 
-                <!-- Note Card 5 -->
-                <div class="note-card">
-                    <div class="note-content">
-                        <h3 class="note-title">Travel Plans</h3>
-                        <p class="note-description">Destinations to visit this year with detailed itinerary and budget
-                            planning for each trip.</p>
-                        <div class="note-meta">
-                            <span class="note-date">Jan 11, 2026</span>
-                        </div>
-                    </div>
-                    <div class="note-actions">
-                        <button class="action-btn edit-btn" title="Edit Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
-                        </button>
-                        <button class="action-btn delete-btn" title="Delete Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
 
-                <!-- Note Card 6 -->
-                <div class="note-card">
-                    <div class="note-content">
-                        <h3 class="note-title">Fitness Goals</h3>
-                        <p class="note-description">Weekly workout routine and nutrition plan to achieve health and
-                            fitness objectives.</p>
-                        <div class="note-meta">
-                            <span class="note-date">Jan 10, 2026</span>
-                        </div>
-                    </div>
-                    <div class="note-actions">
-                        <button class="action-btn edit-btn" title="Edit Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
-                        </button>
-                        <button class="action-btn delete-btn" title="Delete Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Note Card 7 -->
-                <div class="note-card">
-                    <div class="note-content">
-                        <h3 class="note-title">Recipe Collection</h3>
-                        <p class="note-description">Favorite recipes to try including ingredients list and step-by-step
-                            cooking instructions.</p>
-                        <div class="note-meta">
-                            <span class="note-date">Jan 9, 2026</span>
-                        </div>
-                    </div>
-                    <div class="note-actions">
-                        <button class="action-btn edit-btn" title="Edit Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
-                        </button>
-                        <button class="action-btn delete-btn" title="Delete Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Note Card 8 -->
-                <div class="note-card">
-                    <div class="note-content">
-                        <h3 class="note-title">Learning Resources</h3>
-                        <p class="note-description">Online courses, tutorials, and educational materials for skill
-                            development and career advancement.</p>
-                        <div class="note-meta">
-                            <span class="note-date">Jan 8, 2026</span>
-                        </div>
-                    </div>
-                    <div class="note-actions">
-                        <button class="action-btn edit-btn" title="Edit Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
-                        </button>
-                        <button class="action-btn delete-btn" title="Delete Note">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </main>

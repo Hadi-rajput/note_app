@@ -5,6 +5,7 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const User = require("./model/user");
 const session = require("express-session");
+const Note = require("./model/note");
 
 const app = express();
 const PORT = 4000;
@@ -24,7 +25,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 day
-  })
+  }),
 );
 
 // =========================
@@ -50,8 +51,24 @@ function isAuth(req, res, next) {
 // =========================
 
 // Home Page (Protected)
-app.get("/", isAuth, (req, res) => {
-  res.render("index", { name: req.session.userName }); // show logged-in user name
+app.get("/", isAuth, async (req, res) => {
+  try {
+    // FIX: Changed 'userid' to 'userId' (case-sensitive) and 'created' to 'createdAt' (correct field name)
+    const notes = await Note.find({ userId: req.session.userId }).sort({
+      createdAt: -1,
+    }); // -1 se mein latest to oldest dhekhonga
+    res.render("index", {
+      name: req.session.userName,
+      notes,
+    });
+  } catch (error) {
+    console.log(`error while fetching eror. error is:${error}`);
+
+    res.render("index", {
+      name: req.session.userName,
+      notes: [],
+    });
+  }
 });
 
 // Add Note Page (Protected)
@@ -150,7 +167,7 @@ app.post(
       console.log("User save failed: " + error);
       next(error); // Pass to 500 error handler
     }
-  }
+  },
 );
 
 // =========================
@@ -163,13 +180,18 @@ app.post("/login", async (req, res) => {
     // Check if email exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.render("login", { error: "Invalid email or password. Try Again!" }); // FIX: add return
+      return res.render("login", {
+        errors: "Invalid email or password. Try Again!",
+      }); // FIX: add return
     }
 
     // Compare hashed password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.render("login", { error: "Invalid email or password. Try Again!" }); // FIX: add return
+      // FIX: Changed 'errors' to 'error' for consistency with login template variable name
+      return res.render("login", {
+        errors: "Invalid email or password. Try Again!",
+      });
     }
 
     // Set session
@@ -181,6 +203,45 @@ app.post("/login", async (req, res) => {
   } catch (error) {
     console.log("Login failed: " + error);
     res.status(500).render("500");
+  }
+});
+
+// add-note ka kaaam hai ye is mein no error abhi ke liye baad mein error bhi show karonga
+
+app.post("/add-note", isAuth, async (req, res) => {
+  const { title, description } = req.body;
+  try {
+    if (!title || !description) {
+      return res.render("add-note", { errors: "All fields are required" });
+    }
+
+    const newNote = new Note({
+      title: title,
+      description: description,
+      userId: req.session.userId,
+    });
+    await newNote.save();
+    res.redirect("/");
+  } catch (error) {
+    console.log(`error while saving note error is ${error}`);
+    return res.render("add-note", {
+      errors: "Something went wrong while saving notes.Please try again later.",
+    });
+  }
+});
+
+
+// delete note handling 
+
+app.get("/delete-note/:id",isAuth,async(req,res)=>{
+  const noteId = req.params.id;
+
+  try{
+    await Note.deleteOne({_id:noteId,userId:req.session.userId});
+    res.redirect("/");
+  }catch(error){
+    console.log(error);
+    
   }
 });
 
