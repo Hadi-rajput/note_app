@@ -245,6 +245,22 @@ app.get("/delete-note/:id",isAuth,async(req,res)=>{
   }
 });
 
+// update form get handling 
+
+app.get("/edit-note/:id",isAuth,async(req,res)=>{
+  const noteId = req.params.id;
+  try{
+    const note = await Note.findOne({_id:noteId,userId:req.session.userId});
+    if(!note){
+      res.redirect("/");
+    }
+
+    res.render("edit-note",{note,errors:[]})
+  }catch(error){
+    console.log(error);
+  }
+})
+
 // =========================
 // ERROR HANDLERS
 // =========================
