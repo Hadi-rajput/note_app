@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const User = require("./model/user");
 const session = require("express-session");
 const Note = require("./model/note");
+const { title } = require("process");
 
 const app = express();
 const PORT = 4000;
@@ -53,17 +54,31 @@ function isAuth(req, res, next) {
 // Home Page (Protected)
 app.get("/", isAuth, async (req, res) => {
   try {
-    // FIX: Changed 'userid' to 'userId' (case-sensitive) and 'created' to 'createdAt' (correct field name)
-    const notes = await Note.find({ userId: req.session.userId }).sort({
-      createdAt: -1,
-    }); // -1 se mein latest to oldest dhekhonga
+    const search = req.query.q; // search input
+    const userId = req.session.userId;
+
+    let notes;
+
+    if (search) {
+      // SEARCH MODE
+      notes = await Note.find({
+        userId,
+        $or: [
+          { title: { $regex: search, $options: "i" } },
+          { description: { $regex: search, $options: "i" } },
+        ],
+      }).sort({ createdAt: -1 });
+    } else {
+      // NORMAL MODE
+      notes = await Note.find({ userId }).sort({ createdAt: -1 });
+    }
+
     res.render("index", {
       name: req.session.userName,
       notes,
     });
   } catch (error) {
-    console.log(`error while fetching eror. error is:${error}`);
-
+    console.log("Error:", error);
     res.render("index", {
       name: req.session.userName,
       notes: [],
@@ -230,36 +245,57 @@ app.post("/add-note", isAuth, async (req, res) => {
   }
 });
 
+// delete note handling
 
-// delete note handling 
-
-app.get("/delete-note/:id",isAuth,async(req,res)=>{
+app.get("/delete-note/:id", isAuth, async (req, res) => {
   const noteId = req.params.id;
 
-  try{
-    await Note.deleteOne({_id:noteId,userId:req.session.userId});
+  try {
+    await Note.deleteOne({ _id: noteId, userId: req.session.userId });
     res.redirect("/");
-  }catch(error){
+  } catch (error) {
     console.log(error);
-    
   }
 });
 
-// update form get handling 
+// update form get handling
 
-app.get("/edit-note/:id",isAuth,async(req,res)=>{
+app.get("/edit-note/:id", isAuth, async (req, res) => {
   const noteId = req.params.id;
-  try{
-    const note = await Note.findOne({_id:noteId,userId:req.session.userId});
-    if(!note){
+  try {
+    const note = await Note.findOne({
+      _id: noteId,
+      userId: req.session.userId,
+    });
+    if (!note) {
       res.redirect("/");
     }
 
-    res.render("edit-note",{note,errors:[]})
-  }catch(error){
+    res.render("edit-note", { note, errors: [] });
+  } catch (error) {
     console.log(error);
   }
-})
+});
+
+// edit note post handling
+
+app.post("/edit-note/:id", isAuth, async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    const noteId = req.params.id;
+    await Note.findByIdAndUpdate(noteId, {
+      title,
+      description,
+    });
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+    res.render("edit-note", {
+      errors: ["Something went wrong. Please try again later."],
+      note: { _id: req.params.id, title, description },
+    });
+  }
+});
 
 // =========================
 // ERROR HANDLERS
